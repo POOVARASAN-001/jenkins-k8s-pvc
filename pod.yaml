@@ -1,0 +1,19 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:stable
+      command: ["/bin/sh", "-c"]
+      args:
+        - "echo 'Persistent storage is working' > /data/test.txt; sleep 3600"
+      volumeMounts:
+        - name: storage
+          mountPath: /data
+  volumes:
+    - name: storage
+      persistentVolumeClaim:
+        claimName: lab-pvc
